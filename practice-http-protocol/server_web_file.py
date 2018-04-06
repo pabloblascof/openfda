@@ -3,7 +3,7 @@ import socket
 
 # Server configuration
 IP = "localhost"
-PORT = 9006
+PORT = 8002
 MAX_OPEN_REQUESTS = 5
 
 
