@@ -8,18 +8,18 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-  <link rel="dns-prefetch" href="https://assets-cdn.github.com">
+  <link rel="dns-prefetch" href="https://assets-cdn.practice-github.com">
   <link rel="dns-prefetch" href="https://avatars0.githubusercontent.com">
   <link rel="dns-prefetch" href="https://avatars1.githubusercontent.com">
   <link rel="dns-prefetch" href="https://avatars2.githubusercontent.com">
   <link rel="dns-prefetch" href="https://avatars3.githubusercontent.com">
-  <link rel="dns-prefetch" href="https://github-cloud.s3.amazonaws.com">
+  <link rel="dns-prefetch" href="https://practice-github-cloud.s3.amazonaws.com">
   <link rel="dns-prefetch" href="https://user-images.githubusercontent.com/">
 
 
 
-  <link crossorigin="anonymous" media="all" integrity="sha512-KDTN+N5tDqyAVqiTL8LuAYfCS2kKztX/cdejhBZu3hP7LuROj3O9LtASLb9ZMY5YALygmwk3Y5s1hy1vWLGtQg==" rel="stylesheet" href="https://assets-cdn.github.com/assets/frameworks-8f281eb0a8d2308ceb36e714ba3c3aec.css" />
-  <link crossorigin="anonymous" media="all" integrity="sha512-S03SEUSDhm6inBJc+LqIfQQCCPuSaE//B8autRfAZ/i+6RaDVTILjDMImkuEswH+IW6xtCG94fTZ/2wd8cKFUA==" rel="stylesheet" href="https://assets-cdn.github.com/assets/github-a35bd71ee445e9c0799247764da31e0c.css" />
+  <link crossorigin="anonymous" media="all" integrity="sha512-KDTN+N5tDqyAVqiTL8LuAYfCS2kKztX/cdejhBZu3hP7LuROj3O9LtASLb9ZMY5YALygmwk3Y5s1hy1vWLGtQg==" rel="stylesheet" href="https://assets-cdn.practice-github.com/assets/frameworks-8f281eb0a8d2308ceb36e714ba3c3aec.css" />
+  <link crossorigin="anonymous" media="all" integrity="sha512-S03SEUSDhm6inBJc+LqIfQQCCPuSaE//B8autRfAZ/i+6RaDVTILjDMImkuEswH+IW6xtCG94fTZ/2wd8cKFUA==" rel="stylesheet" href="https://assets-cdn.practice-github.com/assets/practice-github-a35bd71ee445e9c0799247764da31e0c.css" />
   
   
   
@@ -30,14 +30,14 @@
   <title>openfda/drug-server(original).py at master · Lasonata/openfda</title>
     <meta name="description" content="GitHub is where people build software. More than 27 million people use GitHub to discover, fork, and contribute to over 80 million projects.">
   <link rel="search" type="application/opensearchdescription+xml" href="/opensearch.xml" title="GitHub">
-  <link rel="fluid-icon" href="https://github.com/fluidicon.png" title="GitHub">
+  <link rel="fluid-icon" href="https://practice-github.com/fluidicon.png" title="GitHub">
   <meta property="fb:app_id" content="1401488693436528">
 
     
-    <meta property="og:image" content="https://avatars1.githubusercontent.com/u/37112689?s=400&amp;v=4" /><meta property="og:site_name" content="GitHub" /><meta property="og:type" content="object" /><meta property="og:title" content="Lasonata/openfda" /><meta property="og:url" content="https://github.com/Lasonata/openfda" /><meta property="og:description" content="Contribute to openfda development by creating an account on GitHub." />
+    <meta property="og:image" content="https://avatars1.githubusercontent.com/u/37112689?s=400&amp;v=4" /><meta property="og:site_name" content="GitHub" /><meta property="og:type" content="object" /><meta property="og:title" content="Lasonata/openfda" /><meta property="og:url" content="https://practice-github.com/Lasonata/openfda" /><meta property="og:description" content="Contribute to openfda development by creating an account on GitHub." />
 
-  <link rel="assets" href="https://assets-cdn.github.com/">
-  <link rel="web-socket" href="wss://live.github.com/_sockets/VjI6MjU4MzU3NjAxOmU4N2JjYzg0NWYxNWM4MzU1MjNiYzVkNDdkYzJlNDRjZGViZWQzOWQ0YjdlMTRiMGExN2Q4MTExYjNkZmRjM2Y=--f8f19cf90f293cfa50160b99921e0e8dcb9d9fce">
+  <link rel="assets" href="https://assets-cdn.practice-github.com/">
+  <link rel="web-socket" href="wss://live.practice-github.com/_sockets/VjI6MjU4MzU3NjAxOmU4N2JjYzg0NWYxNWM4MzU1MjNiYzVkNDdkYzJlNDRjZGViZWQzOWQ0YjdlMTRiMGExN2Q4MTExYjNkZmRjM2Y=--f8f19cf90f293cfa50160b99921e0e8dcb9d9fce">
   <meta name="pjax-timeout" content="1000">
   <link rel="sudo-modal" href="/sessions/sudo_modal">
   <meta name="request-id" content="CAA4:6DAF:55693D:A280DF:5AC38F9E" data-pjax-transient>
@@ -52,8 +52,8 @@
   <meta name="google-site-verification" content="GXs5KoUUkNCoaAZn7wPN-t01Pywp9M3sEjnt_3_ZWPc">
     <meta name="google-analytics" content="UA-3769691-2">
 
-<meta name="octolytics-host" content="collector.githubapp.com" /><meta name="octolytics-app-id" content="github" /><meta name="octolytics-event-url" content="https://collector.githubapp.com/github-external/browser_event" /><meta name="octolytics-dimension-request_id" content="CAA4:6DAF:55693D:A280DF:5AC38F9E" /><meta name="octolytics-dimension-region_edge" content="iad" /><meta name="octolytics-dimension-region_render" content="iad" /><meta name="octolytics-actor-id" content="37112856" /><meta name="octolytics-actor-login" content="pabloblascof" /><meta name="octolytics-actor-hash" content="52f1c6e0ac2c84d34deada61a65da50b99ff6cef8a883b95ec93e5f720f2d546" />
-<meta name="hydro-events-url" content="https://github.com/hydro_browser_events" />
+<meta name="octolytics-host" content="collector.githubapp.com" /><meta name="octolytics-app-id" content="practice-github" /><meta name="octolytics-event-url" content="https://collector.githubapp.com/practice-github-external/browser_event" /><meta name="octolytics-dimension-request_id" content="CAA4:6DAF:55693D:A280DF:5AC38F9E" /><meta name="octolytics-dimension-region_edge" content="iad" /><meta name="octolytics-dimension-region_render" content="iad" /><meta name="octolytics-actor-id" content="37112856" /><meta name="octolytics-actor-login" content="pabloblascof" /><meta name="octolytics-actor-hash" content="52f1c6e0ac2c84d34deada61a65da50b99ff6cef8a883b95ec93e5f720f2d546" />
+<meta name="hydro-events-url" content="https://practice-github.com/hydro_browser_events" />
 <meta name="analytics-location" content="/&lt;user-name&gt;/&lt;repo-name&gt;/blob/show" data-pjax-transient="true" />
 
 
@@ -64,10 +64,10 @@
 
   
 
-      <meta name="hostname" content="github.com">
+      <meta name="hostname" content="practice-github.com">
     <meta name="user-login" content="pabloblascof">
 
-      <meta name="expected-hostname" content="github.com">
+      <meta name="expected-hostname" content="practice-github.com">
     <meta name="js-proxy-site-detection-payload" content="YjEzODEwY2JlMWQwN2U5ZDVkMWJkZTA5MjBiNzgxNTc1MjRjNjQ5MDZlZjE3MDU5OTlmYjA4Y2ZhMGJjNGIwMHx7InJlbW90ZV9hZGRyZXNzIjoiMTkzLjE0Ny43Ny4zIiwicmVxdWVzdF9pZCI6IkNBQTQ6NkRBRjo1NTY5M0Q6QTI4MERGOjVBQzM4RjlFIiwidGltZXN0YW1wIjoxNTIyNzY1NzI3LCJob3N0IjoiZ2l0aHViLmNvbSJ9">
 
     <meta name="enabled-features" content="UNIVERSE_BANNER,FREE_TRIALS,MARKETPLACE_INSIGHTS,MARKETPLACE_INSIGHTS_CONVERSION_PERCENTAGES,JS_ROLLUP_MODULES">
@@ -77,23 +77,23 @@
   <meta http-equiv="x-pjax-version" content="a7446dfcc5eccdbf733c72fa033aa722">
   
 
-      <link href="https://github.com/Lasonata/openfda/commits/master.atom" rel="alternate" title="Recent Commits to openfda:master" type="application/atom+xml">
+      <link href="https://practice-github.com/Lasonata/openfda/commits/master.atom" rel="alternate" title="Recent Commits to openfda:master" type="application/atom+xml">
 
   <meta name="description" content="Contribute to openfda development by creating an account on GitHub.">
-  <meta name="go-import" content="github.com/Lasonata/openfda git https://github.com/Lasonata/openfda.git">
+  <meta name="go-import" content="practice-github.com/Lasonata/openfda git https://practice-github.com/Lasonata/openfda.git">
 
   <meta name="octolytics-dimension-user_id" content="37112689" /><meta name="octolytics-dimension-user_login" content="Lasonata" /><meta name="octolytics-dimension-repository_id" content="125534650" /><meta name="octolytics-dimension-repository_nwo" content="Lasonata/openfda" /><meta name="octolytics-dimension-repository_public" content="true" /><meta name="octolytics-dimension-repository_is_fork" content="false" /><meta name="octolytics-dimension-repository_network_root_id" content="125534650" /><meta name="octolytics-dimension-repository_network_root_nwo" content="Lasonata/openfda" /><meta name="octolytics-dimension-repository_explore_github_marketplace_ci_cta_shown" content="false" />
 
 
-    <link rel="canonical" href="https://github.com/Lasonata/openfda/blob/master/openfda-3/drug-server(original).py" data-pjax-transient>
+    <link rel="canonical" href="https://practice-github.com/Lasonata/openfda/blob/master/openfda-3/drug-server(original).py" data-pjax-transient>
 
 
-  <meta name="browser-stats-url" content="https://api.github.com/_private/browser/stats">
+  <meta name="browser-stats-url" content="https://api.practice-github.com/_private/browser/stats">
 
-  <meta name="browser-errors-url" content="https://api.github.com/_private/browser/errors">
+  <meta name="browser-errors-url" content="https://api.practice-github.com/_private/browser/errors">
 
-  <link rel="mask-icon" href="https://assets-cdn.github.com/pinned-octocat.svg" color="#000000">
-  <link rel="icon" type="image/x-icon" class="js-site-favicon" href="https://assets-cdn.github.com/favicon.ico">
+  <link rel="mask-icon" href="https://assets-cdn.practice-github.com/pinned-octocat.svg" color="#000000">
+  <link rel="icon" type="image/x-icon" class="js-site-favicon" href="https://assets-cdn.practice-github.com/favicon.ico">
 
 <meta name="theme-color" content="#1e2327">
 
@@ -122,8 +122,8 @@
   <div class="d-flex flex-justify-between px-3 container-lg">
     <div class="d-flex flex-justify-between ">
       <div class="">
-        <a class="header-logo-invertocat" href="https://github.com/" data-hotkey="g d" aria-label="Homepage" data-ga-click="Header, go to dashboard, icon:logo">
-  <svg height="32" class="octicon octicon-mark-github" viewBox="0 0 16 16" version="1.1" width="32" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+        <a class="header-logo-invertocat" href="https://practice-github.com/" data-hotkey="g d" aria-label="Homepage" data-ga-click="Header, go to dashboard, icon:logo">
+  <svg height="32" class="octicon octicon-mark-practice-github" viewBox="0 0 16 16" version="1.1" width="32" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
 </a>
 
       </div>
@@ -206,7 +206,7 @@
     Import repository
   </a>
 
-<a class="dropdown-item" href="https://gist.github.com/" data-ga-click="Header, create new gist">
+<a class="dropdown-item" href="https://gist.practice-github.com/" data-ga-click="Header, create new gist">
   New gist
 </a>
 
@@ -251,11 +251,11 @@
         <li><a class="dropdown-item" href="/pabloblascof?tab=stars" data-ga-click="Header, go to starred repos, text:your stars">
           Your stars
         </a></li>
-          <li><a class="dropdown-item" href="https://gist.github.com/" data-ga-click="Header, your gists, text:your gists">Your gists</a></li>
+          <li><a class="dropdown-item" href="https://gist.practice-github.com/" data-ga-click="Header, your gists, text:your gists">Your gists</a></li>
 
         <li class="dropdown-divider"></li>
 
-        <li><a class="dropdown-item" href="https://help.github.com" data-ga-click="Header, go to help, text:help">
+        <li><a class="dropdown-item" href="https://help.practice-github.com" data-ga-click="Header, go to help, text:help">
           Help
         </a></li>
 
@@ -604,7 +604,7 @@
     </div>
 
     <div class="commit-tease-contributors">
-      <img alt="" class="loader-loading float-left" src="https://assets-cdn.github.com/images/spinners/octocat-spinner-32-EAF2F5.gif" width="16" height="16" />
+      <img alt="" class="loader-loading float-left" src="https://assets-cdn.practice-github.com/images/spinners/octocat-spinner-32-EAF2F5.gif" width="16" height="16" />
       <span class="loader-error">Cannot retrieve contributors at this time</span>
     </div>
 </include-fragment>
@@ -620,7 +620,7 @@
     </div>
 
         <a class="btn-octicon tooltipped tooltipped-nw"
-           href="https://desktop.github.com"
+           href="https://desktop.practice-github.com"
            aria-label="Open this file in GitHub Desktop"
            data-ga-click="Repository, open with desktop, type:windows">
             <svg class="octicon octicon-device-desktop" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M15 2H1c-.55 0-1 .45-1 1v9c0 .55.45 1 1 1h5.34c-.25.61-.86 1.39-2.34 2h8c-1.48-.61-2.09-1.39-2.34-2H15c.55 0 1-.45 1-1V3c0-.55-.45-1-1-1zm0 9H1V3h14v8z"/></svg>
@@ -1249,23 +1249,23 @@
   <div class="position-relative d-flex flex-justify-between pt-6 pb-2 mt-6 f6 text-gray border-top border-gray-light ">
     <ul class="list-style-none d-flex flex-wrap ">
       <li class="mr-3">&copy; 2018 <span title="0.42941s from unicorn-2177405790-mjbvq">GitHub</span>, Inc.</li>
-        <li class="mr-3"><a data-ga-click="Footer, go to terms, text:terms" href="https://github.com/site/terms">Terms</a></li>
-        <li class="mr-3"><a data-ga-click="Footer, go to privacy, text:privacy" href="https://github.com/site/privacy">Privacy</a></li>
-        <li class="mr-3"><a href="https://help.github.com/articles/github-security/" data-ga-click="Footer, go to security, text:security">Security</a></li>
-        <li class="mr-3"><a href="https://status.github.com/" data-ga-click="Footer, go to status, text:status">Status</a></li>
-        <li><a data-ga-click="Footer, go to help, text:help" href="https://help.github.com">Help</a></li>
+        <li class="mr-3"><a data-ga-click="Footer, go to terms, text:terms" href="https://practice-github.com/site/terms">Terms</a></li>
+        <li class="mr-3"><a data-ga-click="Footer, go to privacy, text:privacy" href="https://practice-github.com/site/privacy">Privacy</a></li>
+        <li class="mr-3"><a href="https://help.practice-github.com/articles/practice-github-security/" data-ga-click="Footer, go to security, text:security">Security</a></li>
+        <li class="mr-3"><a href="https://status.practice-github.com/" data-ga-click="Footer, go to status, text:status">Status</a></li>
+        <li><a data-ga-click="Footer, go to help, text:help" href="https://help.practice-github.com">Help</a></li>
     </ul>
 
-    <a aria-label="Homepage" title="GitHub" class="footer-octicon" href="https://github.com">
-      <svg height="24" class="octicon octicon-mark-github" viewBox="0 0 16 16" version="1.1" width="24" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+    <a aria-label="Homepage" title="GitHub" class="footer-octicon" href="https://practice-github.com">
+      <svg height="24" class="octicon octicon-mark-practice-github" viewBox="0 0 16 16" version="1.1" width="24" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
 </a>
    <ul class="list-style-none d-flex flex-wrap ">
-        <li class="mr-3"><a data-ga-click="Footer, go to contact, text:contact" href="https://github.com/contact">Contact GitHub</a></li>
-      <li class="mr-3"><a href="https://developer.github.com" data-ga-click="Footer, go to api, text:api">API</a></li>
-      <li class="mr-3"><a href="https://training.github.com" data-ga-click="Footer, go to training, text:training">Training</a></li>
-      <li class="mr-3"><a href="https://shop.github.com" data-ga-click="Footer, go to shop, text:shop">Shop</a></li>
-        <li class="mr-3"><a data-ga-click="Footer, go to blog, text:blog" href="https://github.com/blog">Blog</a></li>
-        <li><a data-ga-click="Footer, go to about, text:about" href="https://github.com/about">About</a></li>
+        <li class="mr-3"><a data-ga-click="Footer, go to contact, text:contact" href="https://practice-github.com/contact">Contact GitHub</a></li>
+      <li class="mr-3"><a href="https://developer.practice-github.com" data-ga-click="Footer, go to api, text:api">API</a></li>
+      <li class="mr-3"><a href="https://training.practice-github.com" data-ga-click="Footer, go to training, text:training">Training</a></li>
+      <li class="mr-3"><a href="https://shop.practice-github.com" data-ga-click="Footer, go to shop, text:shop">Shop</a></li>
+        <li class="mr-3"><a data-ga-click="Footer, go to blog, text:blog" href="https://practice-github.com/blog">Blog</a></li>
+        <li><a data-ga-click="Footer, go to about, text:about" href="https://practice-github.com/about">About</a></li>
 
     </ul>
   </div>
@@ -1286,9 +1286,9 @@
 
 
     
-    <script crossorigin="anonymous" integrity="sha512-x22YedMkz1jh52/cvt2qKiIiZ/QCO7VaVLVCu/mgux6Bpetk8BNH7a4zFY6/JJJa1kPbKFbNmPAEaZoxLRd0Bg==" type="application/javascript" src="https://assets-cdn.github.com/assets/frameworks-12e57c25302f5eb2959a90a13ec54bad.js"></script>
+    <script crossorigin="anonymous" integrity="sha512-x22YedMkz1jh52/cvt2qKiIiZ/QCO7VaVLVCu/mgux6Bpetk8BNH7a4zFY6/JJJa1kPbKFbNmPAEaZoxLRd0Bg==" type="application/javascript" src="https://assets-cdn.practice-github.com/assets/frameworks-12e57c25302f5eb2959a90a13ec54bad.js"></script>
     
-    <script crossorigin="anonymous" async="async" integrity="sha512-CTlEs1npEYI8xR1DgnsmuSEXsxkBBiXJDby7KeqNsArfMnzdYlxH4zXlDGqe5eBodF96gnFmXQ8Sm7dwCrOWvg==" type="application/javascript" src="https://assets-cdn.github.com/assets/github-dbbab75be13d77cc82821ddf60806340.js"></script>
+    <script crossorigin="anonymous" async="async" integrity="sha512-CTlEs1npEYI8xR1DgnsmuSEXsxkBBiXJDby7KeqNsArfMnzdYlxH4zXlDGqe5eBodF96gnFmXQ8Sm7dwCrOWvg==" type="application/javascript" src="https://assets-cdn.practice-github.com/assets/practice-github-dbbab75be13d77cc82821ddf60806340.js"></script>
     
     
     
