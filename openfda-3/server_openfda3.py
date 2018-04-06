@@ -4,8 +4,9 @@ import http.client
 import json
 
 # -- IP and the port of the server
+socketserver.TCPServer.allow_reuse_adress = True
 IP = "localhost"  # Localhost means "I": your local machine
-PORT = 8002
+PORT = 8000
 
 
 # HTTPRequestHandler class
