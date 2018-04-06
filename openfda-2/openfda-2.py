@@ -13,4 +13,4 @@ conn.close()
 repos = json.loads(repos_raw)
 
 for elements in repos ["results"]:
-    print (elements ['id'])
+    print (elements['id'])
