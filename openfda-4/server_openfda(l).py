@@ -5,9 +5,40 @@ import json
 
 # Server configuration
 
-IP = "localhost"
+IP = localhost
 PORT = 9008
 MAX_OPEN_REQUESTS = 5
+
+def open_fda(drug, limit):
+
+    headers = {'User-Agent': 'http-client'}
+
+    conn = http.client.HTTPSConnection("api.fda.gov")
+    conn.request("GET", "/drug/label.json?search=generic_name:%s&limit=%s" % (drug,limit), None, headers)
+    r1 = conn.getresponse()
+    print(r1.status, r1.reason)
+    repos_raw = r1.read().decode("utf-8")
+    conn.close()
+
+    repos = json.loads(repos_raw)
+
+    for i in range(len(repos['results'])):
+        print("The id is:", repos['results'][i]["id"])
+
+    with open("fda_info_tobesent.html", "w") as f:
+        f.write('<html><head><h1>Here you are:<title>Kwik-E-Mart</title></h1><body style="background-color: orange">\n<ol>')
+        for i in range(len(repos['results'])):
+            try:
+                drug = repos['results'][i]["openfda"]["brand_name"][0]
+                f.write('\n<li>')
+                f.write(' brand name is: ')
+                f.write(drug)
+                f.write('</li>')  # this will be removed when \n error is fixed
+            except KeyError:
+                continue
+        f.write(
+            '</ol><h3>Thank you, come again</h3> \n <img src="http://www.konbini.com/en/files/2017/08/apu-feat.jpg" alt="Apu Nahasapeemapetilon"><p><a href="http://%s:%s/">Back to Main Page</a></p></head></html>' %(current_ip, PORT))
+        f.close()
 
 
 def process_client(clientsocket):
@@ -28,62 +59,34 @@ def process_client(clientsocket):
     request = request_line.split(" ")
 
     # Get the two component we need: request cmd and path
+    try:
+        req_cmd = request[0]
+        path = request[1]
 
-    req_cmd = request[0]
-    path = request[1]
+        print("")
+        print("REQUEST:", request_msg)
+        print("Command: {}".format(req_cmd))
+        print("Path: {}".format(path))
+        print("")
+    except IndexError:
+        filename = "error_fle.html"
+        path = "error: not found... html file to send automatically set to error.html"
 
-    print("")
-    print("REQUEST:", request_msg)
-    print("Command: {}".format(req_cmd))
-    print("Path: {}".format(path))
-    print("")
-
-
-    # Send an HTML file depending on the path
-    drg_path = path.find('drug')
-    lm_path = path.find('limit')
-
-    if path == "/" :
-        filename = "search.html"
-
-    elif drg_path != -1 and lm_path != -1:
+    # chooses the html page to send, depending on the path
+    if path.find('drug') != -1 : # let´s try to find a drug and a limit entered by user
         try:
-            drug = path[drg_path + 5:lm_path - 1]
-            limit = path[lm_path + 6:]
-
-            print("drug = %s , limit = %s" % (drug, limit))
-
-            headers = {'User-Agent': 'http-client'}
-
-            conn = http.client.HTTPSConnection("api.fda.gov")
-            conn.request("GET", "/drug/label.json?search=generic_name:%s&limit=%s" % (drug, limit), None, headers)
-            r1 = conn.getresponse()
-            print(r1.status, r1.reason)
-            repos_raw = r1.read().decode("utf-8")
-            conn.close()
-
-            repos = json.loads(repos_raw)
-
-            for i in range(len(repos['results'])):
-                print("Id:", repos['results'][i]["id"])
-
-            with open("brand_name.html", "w") as f:
-                f.write('<html><ol>')
-                for i in range(len(repos['results'])):
-                    try:
-                        drug = repos['results'][i]["openfda"]["brand_name"][0]
-                        f.write("\n<li>")
-                        f.write("Brand name: ")
-                        f.write(drug)
-                        f.write("</li>")
-                    except KeyError:
-                        continue
-                f.write("</ol></html>")
-                f.close()
-            filename = "brand_name.html"
-
+            #print("---------", path.find('drug')) # this a check point
+            drugloc = path.find('drug')  # finds drug location
+            limitloc = path.find('limit')  # finds limit location
+            drug = path[drugloc + 5:limitloc - 1]  # drug entered by client
+            limit = path[limitloc + 6:] # limit entered by client
+            print("The user asked for %s and especified a limit of %s" % (drug, limit))
+            open_fda(drug, limit)
+            filename = "fda_info_tobesent.html"
         except KeyError:
             filename = "error_file.html"
+    elif path == "/" :
+        filename = "search.html"
     else:
         filename = "error_file.html"
 
