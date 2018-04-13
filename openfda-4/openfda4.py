@@ -23,12 +23,13 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
             with open("search.html") as f:
                 message = f.read()
             self.wfile.write(bytes(message, "utf8"))
-
         else:
+
             path = str(self.path)
             print(path)
             if "=" in path:
-                drug = path[path.find("drug") + 5: path.find("limit") - 1]
+                
+                drug = path[path.find("drug") + 5: path.find("&")]
                 limit =path[path.find("limit") + 6:]
 
                 headers = {'User-Agent': 'http-client'}
@@ -46,9 +47,7 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
                     for element in repos["results"]:
                         elementli="<li>"+element["openfda"]["brand_name"][0]+"</li>"+"\n"
                         self.wfile.write(bytes(elementli, "utf8"))
-                    self.wfile.write(bytes("</ol>","utf8"))
-            else:
-                print("")
+
         print("File served!")
         return
 

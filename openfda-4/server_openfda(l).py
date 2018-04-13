@@ -5,7 +5,7 @@ import json
 
 # Server configuration
 
-IP = localhost
+IP = 'localhost'
 PORT = 9008
 MAX_OPEN_REQUESTS = 5
 
@@ -37,14 +37,13 @@ def open_fda(drug, limit):
             except KeyError:
                 continue
         f.write(
-            '</ol><h3>Thank you, come again</h3> \n <img src="http://www.konbini.com/en/files/2017/08/apu-feat.jpg" alt="Apu Nahasapeemapetilon"><p><a href="http://%s:%s/">Back to Main Page</a></p></head></html>' %(current_ip, PORT))
+            '</ol><h3>Thank you, come again</h3> \n <img src="http://www.konbini.com/en/files/2017/08/apu-feat.jpg" alt="Apu Nahasapeemapetilon"><p><a href="http://%s:%s/">Back to Main Page</a></p></head></html>' %(IP, PORT))
         f.close()
 
 
 def process_client(clientsocket):
     """Function for attending the client. It reads their request message and
        sends the response message back, with the requested html content"""
-
     # Read the request message. It comes from the socket
     # What are received are bytes. We will decode them into an UTF-8 string
     request_msg = clientsocket.recv(1024).decode("utf-8")
