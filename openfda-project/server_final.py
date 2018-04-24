@@ -48,7 +48,7 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
                     elementli="<li>"+element["openfda"]["brand_name"][0]+"</li>"+"\n"
                     self.wfile.write(bytes(elementli, "utf8"))
 
-        def search_company (company, limit):  # searches for manufacturer_name / returns brand_name
+        def search_company (company, limit):
 
             print(str(self.path))
 
@@ -68,6 +68,64 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
                 for element in repos["results"]:
                     elementli = "<li>" + element["openfda"]["brand_name"][0] + "</li>" + "\n"
                     self.wfile.write(bytes(elementli, "utf8"))
+
+        def list_drugs (limit):
+
+            print(str(self.path))
+
+            conn = http.client.HTTPSConnection("api.fda.gov")
+            conn.request("GET", "/drug/label.json?limit=%s" % (limit), None, headers)
+            r1 = conn.getresponse()
+            print(r1.status, r1.reason)
+            repos_raw = r1.read().decode("utf-8")
+            conn.close()
+
+            repos = json.loads(repos_raw)
+
+            with open("info.html", "w"):
+                self.wfile.write(bytes("<ol>" + "\n", "utf8"))
+                for element in repos["results"]:
+                    elementli = "<li>" + element["openfda"]["brand_name"][0] + "</li>" + "\n"
+                    self.wfile.write(bytes(elementli, "utf8"))
+
+        def list_companies (limit):
+
+            print(str(self.path))
+
+            conn = http.client.HTTPSConnection("api.fda.gov")
+            conn.request("GET", "/drug/label.json?limit=%s" % (limit), None, headers)
+            r1 = conn.getresponse()
+            print(r1.status, r1.reason)
+            repos_raw = r1.read().decode("utf-8")
+            conn.close()
+
+            repos = json.loads(repos_raw)
+
+            with open("info.html", "w"):
+                self.wfile.write(bytes("<ol>" + "\n", "utf8"))
+                for element in repos["results"]:
+                    elementli = "<li>" + element["openfda"]["manufacturer_name"][0] + "</li>" + "\n"
+                    self.wfile.write(bytes(elementli, "utf8"))
+
+        def list_warnings (limit):
+
+            print(str(self.path))
+
+            conn = http.client.HTTPSConnection("api.fda.gov")
+            conn.request("GET", "/drug/label.json?limit=%s" % (limit), None, headers)
+            r1 = conn.getresponse()
+            print(r1.status, r1.reason)
+            repos_raw = r1.read().decode("utf-8")
+            conn.close()
+
+            repos = json.loads(repos_raw)
+
+            with open("info.html", "w"):
+                self.wfile.write(bytes("<ol>" + "\n", "utf8"))
+                for element in repos["results"]:
+                    elementli = "<li>" + element["warnings"][0] + "</li>" + "\n"
+                    self.wfile.write(bytes(elementli, "utf8"))
+
 
         path = self.path
 
@@ -89,8 +147,27 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
             search_company(company,limit)
             file = 'info.html'
             send_file(file)
+
+        elif 'listDrugs' in path:
+            limit = path.split("=")[1].split("&")[0]
+            list_drugs(limit)
+            file = 'info.html'
+            send_file(file)
+
+        elif 'listCompanies' in path:
+            limit = path.split("=")[1].split("&")[0]
+            list_companies(limit)
+            file = 'info.html'
+            send_file(file)
+
+        elif 'listWarnings' in path:
+            limit = path.split("=")[1].split("&")[0]
+            list_warnings(limit)
+            file = 'info.html'
+            send_file(file)
         print("File served!")
         return
+
 
 
 # Handler = http.server.SimpleHTTPRequestHandler
