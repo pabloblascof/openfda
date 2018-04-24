@@ -73,6 +73,8 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
 
             print(str(self.path))
 
+            headers = {'User-Agent': 'http-client'}
+
             conn = http.client.HTTPSConnection("api.fda.gov")
             conn.request("GET", "/drug/label.json?limit=%s" % (limit), None, headers)
             r1 = conn.getresponse()
@@ -92,6 +94,8 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
 
             print(str(self.path))
 
+            headers = {'User-Agent': 'http-client'}
+
             conn = http.client.HTTPSConnection("api.fda.gov")
             conn.request("GET", "/drug/label.json?limit=%s" % (limit), None, headers)
             r1 = conn.getresponse()
@@ -110,6 +114,8 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
         def list_warnings (limit):
 
             print(str(self.path))
+
+            headers = {'User-Agent': 'http-client'}
 
             conn = http.client.HTTPSConnection("api.fda.gov")
             conn.request("GET", "/drug/label.json?limit=%s" % (limit), None, headers)
