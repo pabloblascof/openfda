@@ -3,9 +3,11 @@ import socketserver
 import http.client
 import json
 
+socketserver.TCPServer.allow_reuse_address = True
+
 # -- IP and the port of the server
 IP = "localhost"  # Localhost means "I": your local machine
-PORT = 9007
+PORT = 8000
 
 
 # HTTPRequestHandler class
@@ -24,7 +26,7 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
                 message = f.read()
             self.wfile.write(bytes(message, "utf8"))
 
-        elif "search" in self.path:
+        elif "searchDrug" in self.path:
 
             path = str(self.path)
             print(path)
@@ -37,6 +39,31 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
 
             conn = http.client.HTTPSConnection("api.fda.gov")
             conn.request("GET", "/drug/label.json?search=generic_name:%s&limit=%s" %(drug,limit), None, headers)
+            r1 = conn.getresponse()
+            print(r1.status, r1.reason)
+            repos_raw = r1.read().decode("utf-8")
+            repos = json.loads(repos_raw)
+            conn.close()
+
+            with open("info.html","w"):
+                self.wfile.write(bytes("<ol>"+"\n","utf8"))
+                for element in repos["results"]:
+                    elementli="<li>"+element["openfda"]["brand_name"][0]+"</li>"+"\n"
+                    self.wfile.write(bytes(elementli, "utf8"))
+
+        elif "searchCompany" in self.path:
+
+            path = str(self.path)
+            print(path)
+
+            params = self.path.split("?")[1]
+            company = params.split("&")[0].split("=")[1]
+            limit = params.split("&")[1].split("=")[1]
+
+            headers = {'User-Agent': 'http-client'}
+
+            conn = http.client.HTTPSConnection("api.fda.gov")
+            conn.request("GET", "/drug/label.json?search=openfda.manufacturer_name:%s&limit=%s" %(company,limit), None, headers)
             r1 = conn.getresponse()
             print(r1.status, r1.reason)
             repos_raw = r1.read().decode("utf-8")

@@ -67,7 +67,7 @@ def process_client(clientsocket):
             for i in range(len(repos['results'])):
                 print("Id:", repos['results'][i]["id"])
 
-            with open("brand_name.html", "w") as f:
+            with open("info.html", "w") as f:
                 f.write('<html><ol>')
                 for i in range(len(repos['results'])):
                     try:
@@ -80,7 +80,7 @@ def process_client(clientsocket):
                         continue
                 f.write("</ol></html>")
                 f.close()
-            filename = "brand_name.html"
+            filename = "info.html"
 
         except KeyError:
             filename = "error_file.html"

@@ -3,9 +3,11 @@ import socketserver
 import http.client
 import json
 
+socketserver.TCPServer.allow_reuse_address = True
+
 # -- IP and the port of the server
 IP = "localhost"  # Localhost means "I": your local machine
-PORT = 9007
+PORT = 8000
 
 
 # HTTPRequestHandler class
@@ -19,29 +21,26 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
         self.end_headers()
 
         # Send message back to client
-        if self.path == "/":
-            with open("search.html") as f:
+
+        def send_file(file):
+            with open(file) as f:
                 message = f.read()
             self.wfile.write(bytes(message, "utf8"))
 
-        elif "search" in self.path:
+        def search_ingredient (active_ingredient, limit):
 
-            path = str(self.path)
-            print(path)
-
-            params = self.path.split("?")[1]
-            drug = params.split("&")[0].split("=")[1]
-            limit = params.split("&")[1].split("=")[1]
+            print(str(self.path))
 
             headers = {'User-Agent': 'http-client'}
 
             conn = http.client.HTTPSConnection("api.fda.gov")
-            conn.request("GET", "/drug/label.json?search=generic_name:%s&limit=%s" %(drug,limit), None, headers)
+            conn.request("GET", "/drug/label.json?search=active_ingredient:%s&limit=%s" % (active_ingredient, limit), None, headers)
             r1 = conn.getresponse()
             print(r1.status, r1.reason)
             repos_raw = r1.read().decode("utf-8")
-            repos = json.loads(repos_raw)
             conn.close()
+
+            repos = json.loads(repos_raw)
 
             with open("info.html","w"):
                 self.wfile.write(bytes("<ol>"+"\n","utf8"))
@@ -49,6 +48,47 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
                     elementli="<li>"+element["openfda"]["brand_name"][0]+"</li>"+"\n"
                     self.wfile.write(bytes(elementli, "utf8"))
 
+        def search_company (company, limit):  # searches for manufacturer_name / returns brand_name
+
+            print(str(self.path))
+
+            headers = {'User-Agent': 'http-client'}
+
+            conn = http.client.HTTPSConnection("api.fda.gov")
+            conn.request("GET", "/drug/label.json?search=openfda.manufacturer_name:%s&limit=%s" % (company, limit), None, headers)
+            r1 = conn.getresponse()
+            print(r1.status, r1.reason)
+            repos_raw = r1.read().decode("utf-8")
+            conn.close()
+
+            repos = json.loads(repos_raw)
+
+            with open("info.html", "w"):
+                self.wfile.write(bytes("<ol>" + "\n", "utf8"))
+                for element in repos["results"]:
+                    elementli = "<li>" + element["openfda"]["brand_name"][0] + "</li>" + "\n"
+                    self.wfile.write(bytes(elementli, "utf8"))
+
+        path = self.path
+
+        if path == "/":
+            with open("search.html") as f:
+                message = f.read()
+            self.wfile.write(bytes(message, "utf8"))
+
+        elif 'searchDrug' in path:
+            active_ingredient = path.split("=")[1].split("&")[0]
+            limit = path.split("=")[2]
+            search_ingredient(active_ingredient,limit)
+            file = 'info.html'
+            send_file(file)
+
+        elif 'searchCompany' in path:
+            company = path.split("=")[1].split("&")[0]
+            limit = path.split("=")[2]
+            search_company(company,limit)
+            file = 'info.html'
+            send_file(file)
         print("File served!")
         return
 
