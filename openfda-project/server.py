@@ -188,6 +188,7 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
             send_file(file)
 
         else:
+            self.send_response(404)
             with open("not_found.html") as f:
                 message = f.read()
             self.wfile.write(bytes(message, "utf8"))
