@@ -169,8 +169,8 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
 
 
     def get_not_found_page(self):
-        with open("not_found.html") as html_file:
-            html = html_file.read()
+        with open("not_found.html") as f:
+            html = f.read()
 
         return html
 
@@ -192,7 +192,7 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
 
         if self.path == "/":
             # Return the HTML form for searching
-            with open("openfda.html") as file_form:
+            with open("search.html") as file_form:
                 form = file_form.read()
                 http_response = form
         elif 'searchDrug' in self.path:

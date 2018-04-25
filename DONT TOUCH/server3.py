@@ -216,7 +216,7 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
 
         if self.path == "/":
             # Return the HTML form for searching
-            with open("openfda.html") as file_form:
+            with open("search.html") as file_form:
                 form = file_form.read()
                 http_response = form
         elif 'searchDrug' in self.path:

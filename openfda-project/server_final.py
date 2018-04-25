@@ -9,7 +9,6 @@ socketserver.TCPServer.allow_reuse_address = True
 IP = "localhost"  # Localhost means "I": your local machine
 PORT = 8000
 
-
 # HTTPRequestHandler class
 class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
     # GET
