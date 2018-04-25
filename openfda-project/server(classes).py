@@ -48,22 +48,21 @@ class OpenFDAClient():
         return info
 
 class OpenFDAHTML():
-    
-    def create_html(self, json_list): # useful for all
-        # takes in a jasonlist and writes element by element in an html file
+
+    def create_html(self, json_list):
+
         html_file = "<ul>"
         for elem in json_list:
             html_file += "<li>" + elem + "</li>"
         html_file += "</ul>"
-        html_file += "<marquee>powered by Lasonata</marquee>"
-        print("html file has been built")
+
         return html_file
 
     def send_file(self, file):
         with open(file, "r") as f:
-            content = f.read()
-        print(file, "is to be sent")
-        return content
+            message = f.read()
+
+        return message
 
 
 # HTTPRequestHandler class
