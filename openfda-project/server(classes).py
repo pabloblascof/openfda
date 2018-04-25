@@ -69,96 +69,35 @@ class OpenFDAParser():
         drug_list = []
         for element in info:
             try:
+                drug_list.append(info["openfda"]["brand_name"][0])
+            except KeyError:
+                drug_list.append('Unknown')
+        return drug_list
 
+    def parse_companies(self,info):
+        company_list = []
+        for element in info:
+            try:
+                company_list.append(info['results'][element]["openfda"]["manufacturer_name"][0])
+            except KeyError:
+                company_list.append('Unknown')
+        return company_list
+
+    def parse_warnings (self,info)
+        warning_list = []
+        for element in info:
+            try:
+                warning_list.append(info['results'][element]["warnings"][0]
+            except KeyError:
+                warning_list.append('Unknown')
+        return warning_list
 
 # HTTPRequestHandler class
 class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
     # GET
     def do_GET(self):
-        # Send response status code
+        # Define response status code
         status_code = 200
-        # Send headers
-
-
-        # Send message back to client
-
-        def send_file(file):
-            with open(file) as f:
-                message = f.read()
-            self.wfile.write(bytes(message, "utf8"))
-
-        def list_drugs (limit):
-
-            print(str(self.path))
-
-            headers = {'User-Agent': 'http-client'}
-
-            conn = http.client.HTTPSConnection("api.fda.gov")
-            conn.request("GET", "/drug/label.json?limit=%s" % (limit), None, headers)
-            r1 = conn.getresponse()
-            print(r1.status, r1.reason)
-            repos_raw = r1.read().decode("utf-8")
-            conn.close()
-
-            repos = json.loads(repos_raw)
-
-            with open("info.html", "w"):
-                self.wfile.write(bytes("<ol>" + "\n", "utf8"))
-                for element in repos["results"]:
-                    try:
-                        elementli = "<li>" + element["openfda"]["brand_name"][0] + "</li>" + "\n"
-                    except KeyError:
-                        elementli = "<li>" + "Unknown" + "</li>" + "\n"
-                    self.wfile.write(bytes(elementli, "utf8"))
-
-        def list_companies (limit):
-
-            print(str(self.path))
-
-            headers = {'User-Agent': 'http-client'}
-
-            conn = http.client.HTTPSConnection("api.fda.gov")
-            conn.request("GET", "/drug/label.json?limit=%s" % (limit), None, headers)
-            r1 = conn.getresponse()
-            print(r1.status, r1.reason)
-            repos_raw = r1.read().decode("utf-8")
-            conn.close()
-
-            repos = json.loads(repos_raw)
-
-            with open("info.html", "w"):
-                self.wfile.write(bytes("<ol>" + "\n", "utf8"))
-                for element in repos["results"]:
-                    try:
-                        elementli = "<li>" + element["openfda"]["manufacturer_name"][0] + "</li>" + "\n"
-                    except KeyError:
-                        elementli = "<li>" + "Unknown" + "</li>" + "\n"
-                    self.wfile.write(bytes(elementli, "utf8"))
-
-        def list_warnings (limit):
-
-            print(str(self.path))
-
-            headers = {'User-Agent': 'http-client'}
-
-            conn = http.client.HTTPSConnection("api.fda.gov")
-            conn.request("GET", "/drug/label.json?limit=%s" % (limit), None, headers)
-            r1 = conn.getresponse()
-            print(r1.status, r1.reason)
-            repos_raw = r1.read().decode("utf-8")
-            conn.close()
-
-            repos = json.loads(repos_raw)
-
-            with open("info.html", "w"):
-                self.wfile.write(bytes("<ol>" + "\n", "utf8"))
-                for element in repos["results"]:
-                    try:
-                        elementli = "<li>" + element["warnings"][0] + "</li>" + "\n"
-                    except KeyError:
-                        elementli = "<li>" + "Unknown" + "</li>" + "\n"
-                    self.wfile.write(bytes(elementli, "utf8"))
-
 
         path = self.path
 
