@@ -15,7 +15,8 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
     # GET
     def do_GET(self):
         # Send response status code
-        self.send_response(200)
+        status_code = 200
+        self.send_response(status_code)
         # Send headers
         self.send_header('Content-type', 'text/html')
         self.end_headers()
@@ -193,6 +194,7 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
             self.wfile.write(bytes(message, "utf8"))
 
         print("File served!")
+
         return
 
 
