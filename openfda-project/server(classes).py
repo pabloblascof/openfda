@@ -64,6 +64,12 @@ class OpenFDAHTML():
 
         return message
 
+class OpenFDAParser():
+    def parse_drugs(self, info):
+        drug_list = []
+        for element in info:
+            try:
+
 
 # HTTPRequestHandler class
 class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
@@ -71,10 +77,8 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
     def do_GET(self):
         # Send response status code
         status_code = 200
-        self.send_response(status_code)
         # Send headers
-        self.send_header('Content-type', 'text/html')
-        self.end_headers()
+
 
         # Send message back to client
 
@@ -195,17 +199,35 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
             file = 'info.html'
             send_file(file)
 
+        elif 'secret' in path:
+            status_code = 401
+        elif 'redirect' in path:
+            status_code = 302
+
         else:
+            status_code = 404
             with open("not_found.html") as f:
                 message = f.read()
             self.wfile.write(bytes(message, "utf8"))
+
+        self.send_response(status_code)
+
+        if 'secret' in path:
+            self.send_header('WWW-Authenticate', 'Basic realm="OpenFDA Private Zone"')
+        elif 'redirect' in path:
+            self.send_header('Location', 'http://localhost:8000/')
+
+        self.send_header('Content-type', 'text/html')
+        self.end_headers()
+
+
+
+
 
         print("File served!")
 
         return
 
-
-
 # Handler = http.server.SimpleHTTPRequestHandler
 Handler = testHTTPRequestHandler
 
@@ -221,17 +243,4 @@ print("")
 print("Server stopped!")
 
 
-# Handler = http.server.SimpleHTTPRequestHandler
-Handler = testHTTPRequestHandler
-
-httpd = socketserver.TCPServer((IP, PORT), Handler)
-print("serving at port", PORT)
-try:
-    httpd.serve_forever()
-except KeyboardInterrupt:
-    pass
-
-httpd.server_close()
-print("")
-print("Server stopped!")
 
