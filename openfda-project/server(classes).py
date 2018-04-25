@@ -49,19 +49,17 @@ class OpenFDAClient():
 
 class OpenFDAHTML():
 
-    def create_html(self, json_list):
+    def create_html(self, info):
 
         html_file = "<ul>"
-        for elem in json_list:
+        for element in info:
             html_file += "<li>" + elem + "</li>"
         html_file += "</ul>"
-
         return html_file
 
     def send_file(self, file):
         with open(file, "r") as f:
             message = f.read()
-
         return message
 
 class OpenFDAParser():
@@ -83,11 +81,11 @@ class OpenFDAParser():
                 company_list.append('Unknown')
         return company_list
 
-    def parse_warnings (self,info)
+    def parse_warnings (self,info):
         warning_list = []
         for element in info:
             try:
-                warning_list.append(info['results'][element]["warnings"][0]
+                warning_list.append(info['results'][element]["warnings"][0])
             except KeyError:
                 warning_list.append('Unknown')
         return warning_list
@@ -96,47 +94,51 @@ class OpenFDAParser():
 class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
     # GET
     def do_GET(self):
+
+        client = OpenFDAClient()
+        html_gen = OpenFDAHTML()
+        parser = OpenFDAParser()
+
         # Define response status code
         status_code = 200
 
         path = self.path
 
         if path == "/":
-            with open("search.html") as f:
-                message = f.read()
-            self.wfile.write(bytes(message, "utf8"))
+            file = 'search.html'
+            contents = html_gen.send_file(self,file)
 
         elif 'searchDrug' in path:
             active_ingredient = path.split("=")[1].split("&")[0]
             limit = path.split("=")[2]
-            search_drugs(active_ingredient,limit)
-            file = 'info.html'
-            send_file(file)
+            info = client.search_drugs(active_ingredient, limit)
+            drug_list = parser.parse_drugs(self, info)
+            contents = html_gen.create_html(self, drug_list)
 
         elif 'searchCompany' in path:
             company = path.split("=")[1].split("&")[0]
             limit = path.split("=")[2]
-            search_companies(company,limit)
-            file = 'info.html'
-            send_file(file)
+            info = client.search_companies(company, limit)
+            company_list = parser.parse_companies(self, info)
+            contents = html_gen.create_html(self, company_list)
 
         elif 'listDrugs' in path:
             limit = path.split("=")[1].split("&")[0]
-            list_drugs(limit)
-            file = 'info.html'
-            send_file(file)
+            info = client.list_drugs(limit)
+            drugs_list = parser.parse_drugs(self, info)
+            contents = html_gen.create_html(self, drugs_list)
 
         elif 'listCompanies' in path:
             limit = path.split("=")[1].split("&")[0]
-            list_companies(limit)
-            file = 'info.html'
-            send_file(file)
+            info = client.list_drugs(limit)
+            drugs_list = parser.parse_companies(self, info)
+            contents = html_gen.create_html(self, drugs_list)
 
         elif 'listWarnings' in path:
             limit = path.split("=")[1].split("&")[0]
-            list_warnings(limit)
-            file = 'info.html'
-            send_file(file)
+            info = client.list_drugs(limit)
+            warning_list = parser.parse_companies(self, info)
+            contents = html_gen.create_html(self, warning_list)
 
         elif 'secret' in path:
             status_code = 401
@@ -149,6 +151,8 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
                 message = f.read()
             self.wfile.write(bytes(message, "utf8"))
 
+        self.wfile.write(bytes(contents, "utf8"))
+
         self.send_response(status_code)
 
         if 'secret' in path:
@@ -158,10 +162,6 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
 
         self.send_header('Content-type', 'text/html')
         self.end_headers()
-
-
-
-
 
         print("File served!")
 
