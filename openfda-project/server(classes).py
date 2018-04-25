@@ -29,7 +29,7 @@ class OpenFDAClient():
         repos = json.loads(res_raw)
         return repos
 
-    def search_drugs (self, active_ingredient, limit):
+    def search_drugs(self, active_ingredient, limit):
 
         query = "search=active_ingredient:%s&limit=%s" % (active_ingredient, limit)
         info = self.send_query(query)
@@ -53,7 +53,7 @@ class OpenFDAHTML():
 
         html_file = "<ul>"
         for element in info:
-            html_file += "<li>" + elem + "</li>"
+            html_file += "<li>" + element + "</li>"
         html_file += "</ul>"
         return html_file
 
@@ -107,6 +107,7 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
         if path == "/":
             file = 'search.html'
             contents = html_gen.send_file(self,file)
+            self.wfile.write(bytes(contents, "utf8"))
 
         elif 'searchDrug' in path:
             active_ingredient = path.split("=")[1].split("&")[0]
@@ -114,6 +115,7 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
             info = client.search_drugs(active_ingredient, limit)
             drug_list = parser.parse_drugs(self, info)
             contents = html_gen.create_html(self, drug_list)
+            self.wfile.write(bytes(contents, "utf8"))
 
         elif 'searchCompany' in path:
             company = path.split("=")[1].split("&")[0]
@@ -121,24 +123,28 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
             info = client.search_companies(company, limit)
             company_list = parser.parse_companies(self, info)
             contents = html_gen.create_html(self, company_list)
+            self.wfile.write(bytes(contents, "utf8"))
 
         elif 'listDrugs' in path:
             limit = path.split("=")[1].split("&")[0]
             info = client.list_drugs(limit)
             drugs_list = parser.parse_drugs(self, info)
             contents = html_gen.create_html(self, drugs_list)
+            self.wfile.write(bytes(contents, "utf8"))
 
         elif 'listCompanies' in path:
             limit = path.split("=")[1].split("&")[0]
             info = client.list_drugs(limit)
             drugs_list = parser.parse_companies(self, info)
             contents = html_gen.create_html(self, drugs_list)
+            self.wfile.write(bytes(contents, "utf8"))
 
         elif 'listWarnings' in path:
             limit = path.split("=")[1].split("&")[0]
             info = client.list_drugs(limit)
             warning_list = parser.parse_companies(self, info)
             contents = html_gen.create_html(self, warning_list)
+            self.wfile.write(bytes(contents, "utf8"))
 
         elif 'secret' in path:
             status_code = 401
@@ -150,8 +156,6 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
             with open("not_found.html") as f:
                 message = f.read()
             self.wfile.write(bytes(message, "utf8"))
-
-        self.wfile.write(bytes(contents, "utf8"))
 
         self.send_response(status_code)
 
