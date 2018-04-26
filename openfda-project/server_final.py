@@ -150,10 +150,12 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
 
 
         if path == "/":
+            print('"search.html" oppened')
             contents = html.send_file(self, "search.html")
             self.wfile.write(bytes(contents, "utf8"))
 
         elif 'searchDrug'in path:
+            print ('Client request: searchDrug')
             active_ingredient = path.split("=")[1].split("&")[0]
             limit = path.split("=")[2]
             info = client.search_drugs(active_ingredient, limit)
@@ -162,6 +164,7 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
             self.wfile.write(bytes(contents, "utf8"))
 
         elif 'searchCompany' in path:
+            print('Client request: searchCompany')
             company = path.split("=")[1].split("&")[0]
             limit = path.split("=")[2]
             info = client.search_companies(company, limit)
@@ -170,6 +173,7 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
             self.wfile.write(bytes(contents, "utf8"))
 
         elif 'listDrugs' in path:
+            print('Client request: listDrugs')
             limit = path.split("=")[1].split("&")[0]
             info = client.list_drugs(limit)
             drugs_list = parser.parse_drugs(self, info)
@@ -177,6 +181,7 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
             self.wfile.write(bytes(contents, "utf8"))
 
         elif 'listCompanies' in path:
+            print('Client request: listCompanies')
             limit = path.split("=")[1].split("&")[0]
             info = client.list_drugs(limit)
             drugs_list = parser.parse_companies(self, info)
@@ -184,12 +189,13 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
             self.wfile.write(bytes(contents, "utf8"))
 
         elif 'listWarnings' in path:
+            print('Client request: listWarnings')
             limit = path.split("=")[1].split("&")[0]
             info = client.list_drugs(limit)
             warning_list = parser.parse_companies(self, info)
             contents = html.build_html(self, warning_list)
             self.wfile.write(bytes(contents, "utf8"))
-        
+
         elif 'secret' in path:
             status_code = 401
             print('Status code:' + str(status_code))
@@ -204,21 +210,6 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
             self.wfile.write(bytes(message, "utf8"))
 
         return
-
-
-# Handler = http.server.SimpleHTTPRequestHandler
-Handler = testHTTPRequestHandler
-
-httpd = socketserver.TCPServer((IP, PORT), Handler)
-print("serving at port", PORT)
-try:
-    httpd.serve_forever()
-except KeyboardInterrupt:
-    pass
-
-httpd.server_close()
-print("")
-print("Server stopped!")
 
 
 # Handler = http.server.SimpleHTTPRequestHandler
