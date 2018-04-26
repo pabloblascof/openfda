@@ -9,193 +9,201 @@ socketserver.TCPServer.allow_reuse_address = True
 IP = "localhost"  # Localhost means "I": your local machine
 PORT = 8000
 
+class OpenFDAClient():
+
+    def send_query(self, query):
+
+        site = "/drug/label.json"
+        page = site + '?' + query
+
+        print ('Requested page :', page)
+        headers = {'User-Agent': 'http-client'}
+
+        conn = http.client.HTTPSConnection("api.fda.gov")
+        conn.request("GET", page, None, headers)
+        r1 = conn.getresponse()
+        print(r1.status, r1.reason)
+        res_raw = r1.read().decode("utf-8")
+        conn.close()
+
+        repos = json.loads(res_raw)
+        return repos
+
+    def search_drugs (self, active_ingredient, limit):
+
+        query = "search=active_ingredient:%s&limit=%s" % (active_ingredient, limit)
+        info = self.send_query(query)
+        return info
+
+    def search_companies(self,company, limit):
+
+        query = "search=openfda.manufacturer_name:%s&limit=%s" % (company, limit)
+        info = self.send_query(query)
+        return info
+
+    def list_drugs(self, limit):
+
+        query = "limit=%s" % (limit)
+        info = self.send_query(query)
+        return info
+
+class OpenFDAHTML():
+
+    def build_html(self, info):
+
+        html_file = "<ul>"
+        for element in info:
+            html_file += "<li>" + element + "</li>"
+        html_file += "</ul>"
+        return html_file
+
+    def send_file(self, file):
+        with open(file, "r") as f:
+            message = f.read()
+        return message
+
+class OpenFDAParser():
+# includes the logic to extract the data from drugs items
+    def parse_drugs(self, info): # useful in active_ingredients, manufacturer_list
+        # called to return a list containing brand_names:
+        brand_list = []
+        for i in range(len(info['results'])):
+            try:
+                for n in range(len(info['results'][i]["openfda"]["brand_name"])):
+                    try:
+                        brand_list.append(info['results'][i]["openfda"]["brand_name"][0])
+                    except KeyError:
+                        brand_list.append("Unknown")
+                        break
+            except KeyError:
+                brand_list.append("Unknown")
+                continue
+        return brand_list
+    def parse_warnings(self, info): # useful for warning_list
+    # called to return a list containing warnings
+        warning_list = []
+        for i in range(len(info['results'])):
+            try:
+                for n in range(len(info['results'][i]["openfda"]["brand_name"])):
+                    try:
+                        warning_list.append(info['results'][i]["warnings"][0])
+                    except KeyError:
+                        warning_list.append("Unknown")
+                        break
+            except KeyError:
+                warning_list.append("Unknown")
+                continue
+        return warning_list
+
+    def parse_companies(self, info): # useful for manufacturer_list
+        # called to return a list containing manufacturers
+        manufacturer_list = []
+        for i in range(len(info['results'])):
+            try:
+                for n in range(len(info['results'][i]["openfda"]["manufacturer_name"])):
+                    try:
+                        manufacturer_list.append(info['results'][i]["openfda"]["manufacturer_name"][0])
+                    except KeyError:
+                        manufacturer_list.append("Unknown")
+                        break
+            except KeyError:
+                manufacturer_list.append("Unknown")
+                continue
+        return manufacturer_list
+
 # HTTPRequestHandler class
 class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
     # GET
     def do_GET(self):
+
+        # let's create three instances
+        client = OpenFDAClient()
+        parser = OpenFDAParser
+        html = OpenFDAHTML
+
+        path = self.path
+
+        if path == "/" or 'searchDrug' in path or 'searchCompany' in path or 'listDrugs' in path or 'listCompanies' in path or 'listWarnings' in path:
+            status_code = 200
+        elif 'secret' in path:
+            status_code = 401
+        elif 'redirect' in path:
+            status_code = 302
+        else:
+            status_code = 404
+
         # Send response status code
-        status_code = 200
+
         self.send_response(status_code)
+
+        if path == "/" or 'searchDrug' in path or 'searchCompany' in path or 'listDrugs' in path or 'listCompanies' in path or 'listWarnings' in path:
+            self.send_header('Content-type', 'text/html')
+        elif 'secret' in path:
+            self.send_header('WWW-Authenticate', 'Basic realm="OpenFDA Private Zone"')
+        elif 'redirect' in path:
+            self.send_header('Location', 'http://localhost:8000/')
+
         # Send headers
         self.send_header('Content-type', 'text/html')
         self.end_headers()
 
-        # Send message back to client
 
-        def send_file(file):
-            with open(file) as f:
-                message = f.read()
-            self.wfile.write(bytes(message, "utf8"))
-
-        def search_ingredient (active_ingredient, limit):
-
-            print(str(self.path))
-
-            headers = {'User-Agent': 'http-client'}
-
-            conn = http.client.HTTPSConnection("api.fda.gov")
-            conn.request("GET", "/drug/label.json?search=active_ingredient:%s&limit=%s" % (active_ingredient, limit), None, headers)
-            r1 = conn.getresponse()
-            print(r1.status, r1.reason)
-            repos_raw = r1.read().decode("utf-8")
-            conn.close()
-
-            repos = json.loads(repos_raw)
-
-            with open("info.html","w"):
-                self.wfile.write(bytes("<ol>"+"\n","utf8"))
-                for element in repos["results"]:
-                    try:
-                        elementli="<li>"+element["openfda"]["brand_name"][0]+"</li>"+"\n"
-                    except KeyError:
-                        elementli = "<li>" + "Unknown" + "</li>" + "\n"
-                    self.wfile.write(bytes(elementli, "utf8"))
-
-        def search_company (company, limit):
-
-            print(str(self.path))
-
-            headers = {'User-Agent': 'http-client'}
-
-            conn = http.client.HTTPSConnection("api.fda.gov")
-            conn.request("GET", "/drug/label.json?search=openfda.manufacturer_name:%s&limit=%s" % (company, limit), None, headers)
-            r1 = conn.getresponse()
-            print(r1.status, r1.reason)
-            repos_raw = r1.read().decode("utf-8")
-            conn.close()
-
-            repos = json.loads(repos_raw)
-
-            with open("info.html", "w"):
-                self.wfile.write(bytes("<ol>" + "\n", "utf8"))
-                for element in repos["results"]:
-                    try:
-                        elementli = "<li>" + element["openfda"]["brand_name"][0] + "</li>" + "\n"
-                    except KeyError:
-                        elementli = "<li>" + "Unknown" + "</li>" + "\n"
-                    self.wfile.write(bytes(elementli, "utf8"))
-
-        def list_drugs (limit):
-
-            print(str(self.path))
-
-            headers = {'User-Agent': 'http-client'}
-
-            conn = http.client.HTTPSConnection("api.fda.gov")
-            conn.request("GET", "/drug/label.json?limit=%s" % (limit), None, headers)
-            r1 = conn.getresponse()
-            print(r1.status, r1.reason)
-            repos_raw = r1.read().decode("utf-8")
-            conn.close()
-
-            repos = json.loads(repos_raw)
-
-            with open("info.html", "w"):
-                self.wfile.write(bytes("<ol>" + "\n", "utf8"))
-                for element in repos["results"]:
-                    try:
-                        elementli = "<li>" + element["openfda"]["brand_name"][0] + "</li>" + "\n"
-                    except KeyError:
-                        elementli = "<li>" + "Unknown" + "</li>" + "\n"
-                    self.wfile.write(bytes(elementli, "utf8"))
-
-        def list_companies (limit):
-
-            print(str(self.path))
-
-            headers = {'User-Agent': 'http-client'}
-
-            conn = http.client.HTTPSConnection("api.fda.gov")
-            conn.request("GET", "/drug/label.json?limit=%s" % (limit), None, headers)
-            r1 = conn.getresponse()
-            print(r1.status, r1.reason)
-            repos_raw = r1.read().decode("utf-8")
-            conn.close()
-
-            repos = json.loads(repos_raw)
-
-            with open("info.html", "w"):
-                self.wfile.write(bytes("<ol>" + "\n", "utf8"))
-                for element in repos["results"]:
-                    try:
-                        elementli = "<li>" + element["openfda"]["manufacturer_name"][0] + "</li>" + "\n"
-                    except KeyError:
-                        elementli = "<li>" + "Unknown" + "</li>" + "\n"
-                    self.wfile.write(bytes(elementli, "utf8"))
-
-        def list_warnings (limit):
-
-            print(str(self.path))
-
-            headers = {'User-Agent': 'http-client'}
-
-            conn = http.client.HTTPSConnection("api.fda.gov")
-            conn.request("GET", "/drug/label.json?limit=%s" % (limit), None, headers)
-            r1 = conn.getresponse()
-            print(r1.status, r1.reason)
-            repos_raw = r1.read().decode("utf-8")
-            conn.close()
-
-            repos = json.loads(repos_raw)
-
-            with open("info.html", "w"):
-                self.wfile.write(bytes("<ol>" + "\n", "utf8"))
-                for element in repos["results"]:
-                    try:
-                        elementli = "<li>" + element["warnings"][0] + "</li>" + "\n"
-                    except KeyError:
-                        elementli = "<li>" + "Unknown" + "</li>" + "\n"
-                    self.wfile.write(bytes(elementli, "utf8"))
-
-
-        path = self.path
 
         if path == "/":
-            with open("search.html") as f:
-                message = f.read()
-            self.wfile.write(bytes(message, "utf8"))
+            contents = html.send_file(self, "search.html")
+            self.wfile.write(bytes(contents, "utf8"))
 
-        elif 'searchDrug' in path:
+        elif 'searchDrug'in path:
             active_ingredient = path.split("=")[1].split("&")[0]
             limit = path.split("=")[2]
-            search_ingredient(active_ingredient,limit)
-            file = 'info.html'
-            send_file(file)
+            info = client.search_drugs(active_ingredient, limit)
+            drugs_list = parser.parse_drugs(self, info)
+            contents = html.build_html(self, drugs_list)
+            self.wfile.write(bytes(contents, "utf8"))
 
         elif 'searchCompany' in path:
             company = path.split("=")[1].split("&")[0]
             limit = path.split("=")[2]
-            search_company(company,limit)
-            file = 'info.html'
-            send_file(file)
+            info = client.search_companies(company, limit)
+            company_list = parser.parse_companies(self, info)
+            contents = html.build_html(self, company_list)
+            self.wfile.write(bytes(contents, "utf8"))
 
         elif 'listDrugs' in path:
             limit = path.split("=")[1].split("&")[0]
-            list_drugs(limit)
-            file = 'info.html'
-            send_file(file)
+            info = client.list_drugs(limit)
+            drugs_list = parser.parse_drugs(self, info)
+            contents = html.build_html(self, drugs_list)
+            self.wfile.write(bytes(contents, "utf8"))
 
         elif 'listCompanies' in path:
             limit = path.split("=")[1].split("&")[0]
-            list_companies(limit)
-            file = 'info.html'
-            send_file(file)
+            info = client.list_drugs(limit)
+            drugs_list = parser.parse_companies(self, info)
+            contents = html.build_html(self, drugs_list)
+            self.wfile.write(bytes(contents, "utf8"))
 
         elif 'listWarnings' in path:
             limit = path.split("=")[1].split("&")[0]
-            list_warnings(limit)
-            file = 'info.html'
-            send_file(file)
-
+            info = client.list_drugs(limit)
+            warning_list = parser.parse_companies(self, info)
+            contents = html.build_html(self, warning_list)
+            self.wfile.write(bytes(contents, "utf8"))
+        
+        elif 'secret' in path:
+            status_code = 401
+            print('Status code:' + str(status_code))
+        elif 'redirect' in path:
+            status_code = 302
+            print('Status code:' + str(status_code))
         else:
+            status_code = 404
+            print('Status code:' + str(status_code))
             with open("not_found.html") as f:
                 message = f.read()
             self.wfile.write(bytes(message, "utf8"))
 
-        print("File served!")
-
         return
-
 
 
 # Handler = http.server.SimpleHTTPRequestHandler
