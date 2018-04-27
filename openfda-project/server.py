@@ -157,12 +157,12 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
         elif 'searchDrug'in path:
             print ('Client request: searchDrug')
             active_ingredient = path.split("=")[1].split("&")[0]
-            limit = '10'
-            if limit in path:
+            if 'limit' in path:
                 limit = path.split("=")[2]
+                if limit == '':
+                    limit = 10
             else:
                 limit = '10'
-
             info = client.search_drugs(active_ingredient, limit)
             drugs_list = parser.parse_drugs(self, info)
             contents = html.build_html(self, drugs_list)
@@ -171,9 +171,10 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
         elif 'searchCompany' in path:
             print('Client request: searchCompany')
             company = path.split("=")[1].split("&")[0]
-            limit = '10'
-            if limit in path:
+            if 'limit' in path:
                 limit = path.split("=")[2]
+                if limit == '':
+                    limit = 10
             else:
                 limit = '10'
             info = client.search_companies(company, limit)
@@ -183,7 +184,12 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
 
         elif 'listDrugs' in path:
             print('Client request: listDrugs')
-            limit = path.split("=")[1].split("&")[0]
+            if 'limit' in path:
+                limit = path.split("=")[1].split("&")[0]
+                if limit == '':
+                    limit = 10
+            else:
+                limit = '10'
             info = client.list_drugs(limit)
             drugs_list = parser.parse_drugs(self, info)
             contents = html.build_html(self, drugs_list)
@@ -191,7 +197,12 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
 
         elif 'listCompanies' in path:
             print('Client request: listCompanies')
-            limit = path.split("=")[1].split("&")[0]
+            if 'limit' in path:
+                limit = path.split("=")[1].split("&")[0]
+                if limit == '':
+                    limit = 10
+            else:
+                limit = '10'
             info = client.list_drugs(limit)
             drugs_list = parser.parse_companies(self, info)
             contents = html.build_html(self, drugs_list)
@@ -199,7 +210,12 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
 
         elif 'listWarnings' in path:
             print('Client request: listWarnings')
-            limit = path.split("=")[1].split("&")[0]
+            if 'limit' in path:
+                limit = path.split("=")[1].split("&")[0]
+                if limit == '':
+                    limit = 10
+            else:
+                limit = '10'
             info = client.list_drugs(limit)
             warning_list = parser.parse_companies(self, info)
             contents = html.build_html(self, warning_list)
