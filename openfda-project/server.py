@@ -63,9 +63,9 @@ class OpenFDAHTML():
         return message
 
 class OpenFDAParser():
-# includes the logic to extract the data from drugs items
-    def parse_drugs(self, info): # useful in active_ingredients, manufacturer_list
-        # called to return a list containing brand_names:
+
+    def parse_drugs(self, info):
+
         brand_list = []
         for i in range(len(info['results'])):
             try:
@@ -79,8 +79,8 @@ class OpenFDAParser():
                 brand_list.append("Unknown")
                 continue
         return brand_list
-    def parse_warnings(self, info): # useful for warning_list
-    # called to return a list containing warnings
+    def parse_warnings(self, info):
+
         warning_list = []
         for i in range(len(info['results'])):
             try:
@@ -157,7 +157,12 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
         elif 'searchDrug'in path:
             print ('Client request: searchDrug')
             active_ingredient = path.split("=")[1].split("&")[0]
-            limit = path.split("=")[2]
+            limit = '10'
+            if limit in path:
+                limit = path.split("=")[2]
+            else:
+                limit = '10'
+
             info = client.search_drugs(active_ingredient, limit)
             drugs_list = parser.parse_drugs(self, info)
             contents = html.build_html(self, drugs_list)
@@ -166,7 +171,11 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
         elif 'searchCompany' in path:
             print('Client request: searchCompany')
             company = path.split("=")[1].split("&")[0]
-            limit = path.split("=")[2]
+            limit = '10'
+            if limit in path:
+                limit = path.split("=")[2]
+            else:
+                limit = '10'
             info = client.search_companies(company, limit)
             company_list = parser.parse_companies(self, info)
             contents = html.build_html(self, company_list)
