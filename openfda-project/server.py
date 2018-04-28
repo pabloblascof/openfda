@@ -217,7 +217,7 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
             else:
                 limit = '10'
             info = client.list_drugs(limit)
-            warning_list = parser.parse_companies(self, info)
+            warning_list = parser.parse_warnings(self, info)
             contents = html.build_html(self, warning_list)
             self.wfile.write(bytes(contents, "utf8"))
 
