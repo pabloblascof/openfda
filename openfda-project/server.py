@@ -95,8 +95,7 @@ class OpenFDAParser():
                 continue
         return warning_list
 
-    def parse_companies(self, info): # useful for manufacturer_list
-        # called to return a list containing manufacturers
+    def parse_companies(self, info):
         manufacturer_list = []
         for i in range(len(info['results'])):
             try:
