@@ -115,7 +115,6 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
     # GET
     def do_GET(self):
 
-        # let's create three instances
         client = OpenFDAClient()
         parser = OpenFDAParser
         html = OpenFDAHTML
