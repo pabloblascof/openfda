@@ -79,20 +79,21 @@ class OpenFDAParser():
                 brand_list.append("Unknown")
                 continue
         return brand_list
+    
     def parse_warnings(self, info):
 
         warning_list = []
+
         for i in range(len(info['results'])):
             try:
-                for n in range(len(info['results'][i]["openfda"]["brand_name"])):
-                    try:
-                        warning_list.append(info['results'][i]["warnings"][0])
-                    except KeyError:
-                        warning_list.append("Unknown")
-                        break
+                if "warnings" in info["results"][i]:
+                    warning_list.append(info['results'][i]['warnings'][0])
+                else:
+                    warning_list.append("Unknown")
             except KeyError:
                 warning_list.append("Unknown")
                 continue
+
         return warning_list
 
     def parse_companies(self, info):
