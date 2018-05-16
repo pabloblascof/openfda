@@ -50,11 +50,15 @@ class OpenFDAClient():
 class OpenFDAHTML():
 
     def build_html(self, info):
-
-        html_file = "<ul>"
+        html_file = "<body style='background-color:#ADD8E6;'>"
+        html_file += "<font face = ""Arial"">"
+        html_file += "<h1>Search OpenFDA Application</h1>"
+        html_file += "<h3>Here you have the requested data:</h3>"
+        html_file += "<ul>"
         for element in info:
             html_file += "<li>" + element + "</li>"
         html_file += "</ul>"
+        html_file += "<h3>Thank you, come again</h3><p><a href=""http://localhost:8000/"">Back to Main Page</a></p>"
         return html_file
 
     def send_file(self, file):
@@ -79,11 +83,10 @@ class OpenFDAParser():
                 brand_list.append("Unknown")
                 continue
         return brand_list
-    
+
     def parse_warnings(self, info):
 
         warning_list = []
-
         for i in range(len(info['results'])):
             try:
                 if "warnings" in info["results"][i]:
